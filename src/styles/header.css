@@ -1,0 +1,12 @@
+.header {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://image.tmdb.org/t/p/w780/kHex2XdOmGtazk1VfJjp4bl7BIc.jpg");
+  background-color: #17234E;
+  margin-bottom: 30px;
+  min-height: 50%;
+  height: 500px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  text-shadow: black 0.2em 0.2em 0.2em;
+}

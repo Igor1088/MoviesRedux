@@ -1,0 +1,17 @@
+.item {
+  background-color: #ccc;
+  height: 280px;
+  margin-bottom: 10px;
+  text-align: center;
+	overflow: hidden;
+}
+
+.item:nth-child(odd) { background-color: #ecf0f1; }
+.item:nth-child(even) { background-color: #e2e8ea; }
+
+.item-title {
+  font-size: 90%;
+  margin-top: 5px;
+}
+
+.item-image {height: 197px;}

@@ -1,0 +1,46 @@
+.main {
+  margin-top: 50px;
+	margin-bottom: 20px;
+}
+
+#movie-overview  h4 {
+  color: #2ecc71;
+}
+
+#movie-img {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.genres {
+  background-color: #2ecc71;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  padding: 5px;
+  border: 1px solid #2ecc71;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.vote {
+  font-size: 110%;
+}
+
+.smallVote {
+  font-size: 90%;
+}
+
+.year {
+  font-size: 60%;
+  font-weight: normal;
+}
+
+.tagline {
+  font-size: 120%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+blockquote {
+  padding: 0px 10px;
+}

@@ -1,0 +1,15 @@
+.actor {
+  width: auto;
+  height: 190px;
+}
+
+.actorName {
+  margin-bottom: 0px;
+}
+
+.cast {
+  padding: 0;
+  text-align: center;
+  height: 300px;
+  overflow: hidden;
+}
