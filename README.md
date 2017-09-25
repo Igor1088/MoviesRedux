@@ -12,6 +12,7 @@
 * react-router
 * redux
 * redux-thunk
+* Bootstrap
 * TMDb API
 
 ## Run on your Machine
