@@ -59,6 +59,7 @@ class TvSeason extends Component {
               year={name}
               poster={poster}
               overview={overview}
+              season="season"
             />
           </div>
           <div className="episodes-container">

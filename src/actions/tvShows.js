@@ -1,39 +1,31 @@
 import * as types from '../constants/actionTypes';
 import { API_KEY } from '../constants/config';
 
-export function fetchPopularTvShows(page) {
-  return function(dispatch) {
-    fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setPopularTvShows(data));
+export function fetchTvShows(page, path) {
+  let category;
+  if(path === '/topratedtvshows') {
+    category = 'top_rated'
+  } else if (path === '/ontv') {
+    category = 'on_the_air';
+  } else if (path === '/tvshowspopular'){
+    category = 'popular'
+  }
+  return function (dispatch) {
+    fetch(`https://api.themoviedb.org/3/tv/${category}?api_key=${API_KEY}&language=en-US&page=${page}`)
+      .then( response => response.json())
+      .then( data => {
+        dispatch(setTvShows(data));
       })
   }
 }
 
-function setPopularTvShows(tvShow) {
+function setTvShows(tvShows) {
   return {
-    type: types.FETCH_POPULAR_TV_SHOW,
-    tvShow
+    type: types.FETCH_TV_SHOWS,
+    tvShows
   }
 }
 
-export function fetchTopRatedTvShows(page) {
-  return function(dispatch) {
-    fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setTopRatedTvShows(data));
-      })
-  }
-}
-
-function setTopRatedTvShows(tvShow) {
-  return {
-    type: types.FETCH_TOP_RATED_TV_SHOW,
-    tvShow
-  }
-}
 
 export function fetchAiringTodayTvShows() {
   return function(dispatch) {
@@ -45,30 +37,13 @@ export function fetchAiringTodayTvShows() {
   }
 }
 
-function setAiringTvShows(tvShow) {
+function setAiringTvShows(tvShows) {
   return {
     type: types.FETCH_AIRING_TODAY_TV_SHOW,
-    tvShow
+    tvShows
   }
 }
 
-
-export function fetchTvShowsOnTv(page) {
-  return function(dispatch) {
-    fetch(`https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setTvShowsOnTv(data));
-      })
-  }
-}
-
-function setTvShowsOnTv(tvShow) {
-  return {
-    type: types.FETCH_TV_SHOWS_ON_TV,
-    tvShow
-  }
-}
 
 export function fetchTvShowDetails(tvShowId) {
   return function (dispatch) {

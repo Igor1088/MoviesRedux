@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
@@ -11,6 +12,14 @@ import Image from '../components/Image';
 import Loader from '../components/Loader';
 
 class MovieDetails extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClickFavorite = this.handleClickFavorite.bind(this);
+    this.handleClickWatchlist = this.handleClickWatchlist.bind(this);
+    this.renderMovieData = this.renderMovieData.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchMovieDetails(this.props.params.id);
   }
@@ -21,11 +30,21 @@ class MovieDetails extends Component {
     if (newId !== oldId) {
       this.props.fetchMovieDetails(this.props.params.id)
     }
+    ReactDOM.findDOMNode(this).scrollIntoView();
+  }
+
+  handleClickFavorite(){
+    this.props.markAsFavorite(this.props.params.id, 'movie');
+  }
+
+  handleClickWatchlist(){
+    this.props.addToWatchlist(this.props.params.id, 'movie');
   }
 
   renderMovieData(movieData) {
     const title = movieData.title;
     const poster_path = movieData.poster_path;
+    const movie_id = movieData.id;
     const vote = movieData.vote_average;
     const year = movieData.release_date.slice(0, 4);
     const overview = movieData.overview;
@@ -55,13 +74,22 @@ class MovieDetails extends Component {
         key: video.key
       }
     });
-    const similar = movieData.similar.results.slice(0,6).map(similar => {
+    const similar = movieData.similar.results.slice(0,12).map(similar => {
       return {
         id: similar.id,
         title: similar.title,
         poster_path: similar.poster_path
       }
     });
+    let isFavorite;
+    if(this.props.favMovies) {
+      isFavorite = this.props.favMovies.movies.results.some(movie => movie.id === movie_id) ? true : false;
+    }
+    const user = this.props.currentUser ? true : false;
+    let inWatchlist;
+    if(this.props.watchlistMovies) {
+      inWatchlist = this.props.watchlistMovies.watchlistMovies.results.some(movie => movie.id === movie_id) ? true : false;
+    }
 
     return (
       <div className="container" key={movieData.id}>
@@ -76,6 +104,12 @@ class MovieDetails extends Component {
           glyphicon="glyphicon glyphicon-star"
           maxVote="/10"
           heading="Overview"
+          handleClickFavorite={this.handleClickFavorite}
+          handleClickWatchlist={this.handleClickWatchlist}
+          isFavorite={isFavorite}
+          inWatchlist={inWatchlist}
+          user={user}
+          media="movie"
         />
         <div className="row data1-container">
           <h4>Top Billed Cast</h4>
@@ -101,11 +135,13 @@ class MovieDetails extends Component {
         </div>
         <div className="row data2-container">
           <h4>Photos</h4>
+          <div className="photo-container">
           {images.map( (img) => {
             return(
-              <Image key={img.backdrop} size="w780" poster={img.backdrop} grid="col-xs-12 col-sm-6 col-md-4" specClass="photo"/>
+              <Image key={img.backdrop} size="w780" poster={img.backdrop}  specClass="photo"/>
             );
           })}
+          </div>
         </div>
         <div className="row data1-container">
           <h4>Similar movies</h4>
@@ -121,6 +157,10 @@ class MovieDetails extends Component {
       if(this.props.movie.length !== 0) {
         movieDetails = this.props.movie.map(this.renderMovieData);
     }
+    let fav;
+    if(this.props.favMovies) {
+      fav = this.props.favMovies.movies.results.some(movie => movie.id === Number(this.props.params.id)) ? true : false;
+    }
     return (
       <div>
         {movieDetails ? movieDetails : <Loader />}
@@ -132,12 +172,19 @@ class MovieDetails extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchMovieDetails: bindActionCreators(actions.fetchMovieDetails, dispatch)
+    fetchMovieDetails: bindActionCreators(actions.fetchMovieDetails, dispatch),
+    markAsFavorite: bindActionCreators(actions.markAsFavorite, dispatch),
+    addToWatchlist: bindActionCreators(actions.addToWatchlist, dispatch)
   };
 }
 
 function mapStateToProps(state) {
-  return { movie: state.movieDetails };
+  return {
+    movie: state.movieDetails,
+    favMovies: state.user.movies,
+    currentUser: state.session.user,
+    watchlistMovies: state.user.watchlistMovies
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieDetails);

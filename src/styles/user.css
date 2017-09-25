@@ -1,0 +1,14 @@
+.user_avatar {
+  text-align: right;
+}
+
+#username {
+  text-align: left;
+  margin-top: 20px;
+  font-size: 200%;
+}
+
+#username span {
+  margin-left: 10px;
+  font-size: 70%;
+}

@@ -62,7 +62,7 @@ class Person extends Component {
           <h4>Photos</h4>
           {images.map( (img) => {
             return(
-              <Image key={img.poster} size="w185" poster={img.poster} grid="col-xs-6 col-sm-3 col-md-2"/>
+              <Image key={img.poster} specClass='img-actor' size="w185" poster={img.poster} grid="col-xs-6 col-sm-3 col-md-2"/>
             );
           })}
         </div>

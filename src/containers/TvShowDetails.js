@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
@@ -11,6 +12,14 @@ import Season from '../components/Season';
 import Loader from '../components/Loader';
 
 class TvShowDetails extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClickFavorite = this.handleClickFavorite.bind(this);
+    this.renderTvData = this.renderTvData.bind(this);
+    this.handleClickWatchlist = this.handleClickWatchlist.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchTvShowDetails(this.props.params.id);
   }
@@ -21,6 +30,15 @@ class TvShowDetails extends Component {
     if (newId !== oldId) {
       this.props.fetchTvShowDetails(this.props.params.id)
     }
+    ReactDOM.findDOMNode(this).scrollIntoView();
+  }
+
+  handleClickFavorite(){
+    this.props.markAsFavorite(this.props.params.id, 'tv');
+  }
+
+  handleClickWatchlist(){
+    this.props.addToWatchlist(this.props.params.id, 'tv');
   }
 
   renderTvData(tvData) {
@@ -66,6 +84,15 @@ class TvShowDetails extends Component {
         poster_path: similar.poster_path
       }
     });
+    let isFavorite;
+    if(this.props.favTvShows) {
+      isFavorite = this.props.favTvShows.tvShows.results.some(tv => tv.id === tvid) ? true : false;
+    }
+    const user = this.props.currentUser ? true : false;
+    let inWatchlist;
+    if(this.props.watchlistTvShows) {
+      inWatchlist = this.props.watchlistTvShows.watchlistTvShows.results.some(tv => tv.id === tvid) ? true : false;
+    }
 
     return (
       <div className="container" key={tvid}>
@@ -79,6 +106,12 @@ class TvShowDetails extends Component {
           glyphicon="glyphicon glyphicon-star"
           maxVote="/10"
           heading="Overview"
+          handleClickFavorite={this.handleClickFavorite}
+          handleClickWatchlist={this.handleClickWatchlist}
+          isFavorite={isFavorite}
+          inWatchlist={inWatchlist}
+          user={user}
+          media="tv show"
         />
         <div className="row data1-container">
           <h4>Top Billed Cast</h4>
@@ -137,12 +170,19 @@ class TvShowDetails extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchTvShowDetails: bindActionCreators(actions.fetchTvShowDetails, dispatch)
+    fetchTvShowDetails: bindActionCreators(actions.fetchTvShowDetails, dispatch),
+    markAsFavorite: bindActionCreators(actions.markAsFavorite, dispatch),
+    addToWatchlist: bindActionCreators(actions.addToWatchlist, dispatch)
   };
 }
 
 function mapStateToProps(state) {
-  return { tvShow: state.tvShowDetails };
+  return {
+    tvShow: state.tvShowDetails,
+    favTvShows: state.user.tvShows,
+    currentUser: state.session.user,
+    watchlistTvShows: state.user.watchlistTvShows
+   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TvShowDetails);

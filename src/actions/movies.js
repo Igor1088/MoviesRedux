@@ -1,6 +1,32 @@
 import * as types from '../constants/actionTypes';
 import { API_KEY } from '../constants/config';
 
+export function fetchMovies(page, path) {
+  let category;
+  if(path === '/topratedmovies') {
+    category = 'top_rated'
+  } else if (path === '/upcomingmovies') {
+    category = 'upcoming';
+  } else if (path === '/moviespopular'){
+    category = 'popular'
+  }
+  return function (dispatch) {
+    fetch(`https://api.themoviedb.org/3/movie/${category}?api_key=${API_KEY}&language=en-US&page=${page}`)
+      .then( response => response.json())
+      .then( data => {
+        dispatch(setMovies(data));
+      })
+  }
+}
+
+function setMovies(movies) {
+  return {
+    type: types.FETCH_MOVIES,
+    movies
+  }
+}
+
+
 export function fetchInTheatres(){
   return function (dispatch) {
     fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`)
@@ -14,58 +40,6 @@ export function fetchInTheatres(){
 function setTheatresMovies(movies) {
   return {
     type: types.FETCH_IN_THEATRES,
-    movies
-  }
-}
-
-
-export function fetchPopularMovies(page) {
-  return function (dispatch) {
-    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setPopularMovies(data));
-      })
-  }
-}
-
-function setPopularMovies(movies) {
-  return {
-    type: types.FETCH_POPULAR_MOVIES,
-    movies
-  }
-}
-
-export function fetchTopRatedMovies(page) {
-  return function (dispatch) {
-    fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setTopRatedMovies(data));
-      })
-  }
-}
-
-function setTopRatedMovies(movies) {
-  return {
-    type: types.FETCH_TOP_RATED_MOVIES,
-    movies
-  }
-}
-
-export function fetchUpcomingMovies(page) {
-  return function (dispatch) {
-    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setUpcomingMovies(data));
-      })
-  }
-}
-
-function setUpcomingMovies(movies) {
-  return {
-    type: types.FETCH_UPCOMING_MOVIES,
     movies
   }
 }

@@ -10,9 +10,9 @@ class TvShowsAiringToday extends Component {
   }
   render() {
     let items;
-    if (this.props.tvShow.length !== 0) {
-      items = this.props.tvShow.tvShow.results.slice(0,18).map((tvshow) => {
-        return <Item key={tvshow.id} id={tvshow.id} year={tvshow.first_air_date.substr(0,4)} poster={tvshow.poster_path} media="tv" title={tvshow.name}/>;
+    if (this.props.tvShows.length !== 0) {
+      items = this.props.tvShows.results.slice(0,18).map((tvshow) => {
+        return <Item key={tvshow.id} id={tvshow.id} poster={tvshow.poster_path} media="tv" title={tvshow.name}/>;
       });
     }
     return (
@@ -28,7 +28,7 @@ class TvShowsAiringToday extends Component {
 
 function mapStateToProps(state) {
   return {
-    tvShow: state.tvShows
+    tvShows: state.tvShows
   }
 }
 

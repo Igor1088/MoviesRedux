@@ -4,13 +4,9 @@ const initialState = [];
 
 export default function (state = initialState, action) {
   switch(action.type) {
-    case types.FETCH_POPULAR_TV_SHOW:
-      return setTvShow(state, action);
-    case types.FETCH_TOP_RATED_TV_SHOW:
-        return setTvShow(state, action);
     case types.FETCH_AIRING_TODAY_TV_SHOW:
         return setTvShow(state, action);
-    case types.FETCH_TV_SHOWS_ON_TV:
+    case types.FETCH_TV_SHOWS:
         return setTvShow(state, action);
 
   }
@@ -18,6 +14,6 @@ export default function (state = initialState, action) {
 }
 
 function setTvShow (state, action) {
-  const { tvShow } = action;
-  return { ...state, tvShow };
+  const { tvShows } = action;
+  return { ...state, ...tvShows };
 }

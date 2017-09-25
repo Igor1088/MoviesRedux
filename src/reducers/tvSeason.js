@@ -12,5 +12,5 @@ export default function(state = initialState, action) {
 
 function setSeason(state, action) {
   const { tvSeason } = action;
-  return [ tvSeason ];
+  return [ tvSeason];
 }

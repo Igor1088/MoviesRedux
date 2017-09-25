@@ -3,10 +3,9 @@ import RouteLink from './RouteLink';
 import { Nav, NavItem, NavDropdown, MenuItem, Navbar } from 'react-bootstrap';
 import Search from '../containers/Search';
 
-
 const Navigation = () => (
   <Navbar>
-    <Nav bsStyle="pills" className="navbar">
+    <Nav bsStyle="pills" className="navbar navbar-right">
       <NavItem>
         <RouteLink to="/" onlyActiveOnIndex={true}>HOME</RouteLink>
       </NavItem>

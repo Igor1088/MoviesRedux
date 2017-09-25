@@ -67,7 +67,33 @@ img {
 }
 
 .glyphicon-star {
-  color: green;
+  color: #2ecc71;
+}
+
+.auth {
+  text-align: right;
+}
+
+.user-container {
+  padding-left: 0;
+}
+
+.pagination {
+  margin: 30px 20%;
+}
+
+.pagination>li>a, .pagination>li>span {
+  color: #2ecc71;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+  background-color: #2ecc71;
+  border-color: #2ecc71;
 }
 
 @media only screen and (max-width: 480px) {
@@ -77,4 +103,8 @@ img {
 	.main {
 		margin-top: 10px;
 	}
+
+  .pagination {
+    margin: 20px 10px;
+  }
 }

@@ -23,7 +23,7 @@
 }
 
 .vote {
-  font-size: 110%;
+  font-size: 130%;
 }
 
 .smallVote {
@@ -43,4 +43,16 @@
 
 blockquote {
   padding: 0px 10px;
+}
+
+.btn-favorite-active, .btn-watchlist-active {
+  background-color: #2ecc71;
+}
+
+.glyphicon-heart, .glyphicon-minus {
+  color: #c0392b;
+}
+
+.btn-favorite, .btn-watchlist {
+  background-color: #ecf0f1;
 }
